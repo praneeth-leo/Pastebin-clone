@@ -1,65 +1,139 @@
-import Image from "next/image";
+import Link from "next/link";
+import { createPasteAction } from "@/app/actions";
+
+const expiryOptions = [
+  { value: "never", label: "Never", detail: "Keep until manually removed" },
+  { value: "10m", label: "10 min", detail: "Short review window" },
+  { value: "1h", label: "1 hour", detail: "Temporary handoff" },
+  { value: "1d", label: "1 day", detail: "Daily expiry" },
+  { value: "7d", label: "7 days", detail: "Longer collaboration" },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="min-h-screen bg-[#050403] text-[#fff3df]">
+      <section className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-5 py-7 sm:px-8 lg:px-10">
+        <header className="flex items-center justify-between border-b border-[#ff8a2a]/25 pb-5">
+          <Link
+            href="/"
+            className="font-display text-2xl font-semibold tracking-wide text-white"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+            Aurum Paste
+          </Link>
+          <span className="hidden text-sm text-[#ff9f45] sm:block">
+            confidential text vault
+          </span>
+        </header>
+
+        <div className="grid flex-1 items-center gap-8 py-10 lg:grid-cols-[0.78fr_1.22fr]">
+          <div className="space-y-7">
+            <p className="text-sm font-medium uppercase tracking-[0.28em] text-[#ff9f45]">
+              Private paste suite
+            </p>
+            <h1 className="font-display max-w-xl text-5xl font-semibold leading-[0.95] text-white sm:text-7xl">
+              Share sensitive text with quiet precision.
+            </h1>
+            <p className="max-w-lg text-[1.05rem] leading-8 text-[#d9c5aa]">
+              Create a short link, set access preferences, and let the paste
+              expire by time or views when the moment has passed.
+            </p>
+            <div className="grid max-w-lg grid-cols-3 gap-3 text-sm">
+              <div className="border border-[#ff8a2a]/25 bg-[#120c08] p-4 shadow-xl shadow-black/20">
+                <span className="block text-2xl font-semibold text-white">
+                  10
+                </span>
+                <span className="mt-1 block text-[#bfa98d]">char links</span>
+              </div>
+              <div className="border border-[#ff8a2a]/25 bg-[#120c08] p-4 shadow-xl shadow-black/20">
+                <span className="block text-2xl font-semibold text-white">
+                  2
+                </span>
+                <span className="mt-1 block text-[#bfa98d]">expiry modes</span>
+              </div>
+              <div className="border border-[#ff8a2a]/25 bg-[#120c08] p-4 shadow-xl shadow-black/20">
+                <span className="block text-2xl font-semibold text-white">
+                  API
+                </span>
+                <span className="mt-1 block text-[#bfa98d]">test ready</span>
+              </div>
+            </div>
+          </div>
+
+          <form
+            action={createPasteAction}
+            className="rounded-[2px] border border-[#ff8a2a]/30 bg-[#0d0906] p-5 shadow-2xl shadow-black/50 sm:p-7"
+          >
+            <label
+              htmlFor="content"
+              className="text-sm font-medium uppercase tracking-[0.18em] text-[#ff9f45]"
+            >
+              Paste content
+            </label>
+            <textarea
+              id="content"
+              name="content"
+              required
+              minLength={1}
+              maxLength={50000}
+              rows={14}
+              placeholder="Drop your text here..."
+              className="mt-3 min-h-72 w-full resize-y rounded-[2px] border border-[#382113] bg-[#070504] p-4 font-mono text-sm leading-6 text-[#fff3df] outline-none transition placeholder:text-[#8f7157] focus:border-[#ff8a2a] focus:ring-2 focus:ring-[#ff8a2a]/20"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+            <fieldset className="mt-5">
+              <legend className="text-sm font-medium uppercase tracking-[0.18em] text-[#ff9f45]">
+                Expiry preference
+              </legend>
+              <div className="mt-3 grid gap-2 sm:grid-cols-5">
+                {expiryOptions.map((option) => (
+                  <label
+                    key={option.value}
+                    className="group cursor-pointer rounded-[2px] border border-[#382113] bg-[#130b07] p-3 transition hover:border-[#ff8a2a]/70 has-[:checked]:border-[#ff8a2a] has-[:checked]:bg-[#ff8a2a]/12"
+                  >
+                    <input
+                      type="radio"
+                      name="expiresIn"
+                      value={option.value}
+                      defaultChecked={option.value === "never"}
+                      className="sr-only"
+                    />
+                    <span className="block text-sm font-semibold text-white">
+                      {option.label}
+                    </span>
+                    <span className="mt-1 block text-xs leading-4 text-[#bfa98d]">
+                      {option.detail}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <div className="mt-5 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
+              <label className="text-sm font-medium uppercase tracking-[0.18em] text-[#ff9f45]">
+                View limit
+                <input
+                  name="maxViews"
+                  type="number"
+                  min={1}
+                  max={10000}
+                  placeholder="Unlimited"
+                  className="mt-2 h-12 w-full rounded-[2px] border border-[#382113] bg-[#070504] px-3 text-sm text-[#fff3df] outline-none transition placeholder:text-[#8f7157] focus:border-[#ff8a2a] focus:ring-2 focus:ring-[#ff8a2a]/20"
+                />
+              </label>
+              <p className="text-sm leading-6 text-[#bfa98d] sm:max-w-52">
+                Leave blank for unlimited views.
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              className="mt-6 h-12 w-full rounded-[2px] bg-[#ff8a2a] px-4 text-sm font-bold uppercase tracking-[0.2em] text-[#120905] shadow-[0_16px_45px_rgba(255,106,0,0.2)] transition hover:bg-[#ffb15f] focus:outline-none focus:ring-2 focus:ring-[#ffb15f] focus:ring-offset-2 focus:ring-offset-[#0d0906]"
+            >
+              Create shareable link
+            </button>
+          </form>
         </div>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
