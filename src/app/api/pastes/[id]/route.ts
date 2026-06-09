@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { consumePaste } from "@/lib/pastes";
 
+export const runtime = "nodejs";
+
 type PasteApiProps = {
   params: Promise<{
     id: string;

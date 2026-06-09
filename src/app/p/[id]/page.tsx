@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { consumePaste } from "@/lib/pastes";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 type PastePageProps = {
   params: Promise<{

@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createPaste } from "@/lib/pastes";
 
+export const runtime = "nodejs";
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
