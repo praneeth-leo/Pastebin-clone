@@ -3,7 +3,11 @@ import { z } from "zod";
 import { getPrisma } from "@/lib/prisma";
 
 const createPasteSchema = z.object({
-  content: z.string().trim().min(1).max(50_000),
+  content: z
+    .string()
+    .min(1)
+    .max(50_000)
+    .refine((value) => value.trim().length > 0, "Content cannot be blank."),
   expiresIn: z.enum(["never", "10m", "1h", "1d", "7d"]).default("never"),
   maxViews: z.coerce.number().int().min(1).max(10_000).optional(),
 });

@@ -35,10 +35,18 @@ export function CreatePasteForm() {
         }),
       });
 
-      const result = await response.json();
+      const result = (await response.json()) as {
+        id?: string;
+        error?: string;
+      };
 
       if (!response.ok) {
         setError(result.error ?? "Could not create paste.");
+        return;
+      }
+
+      if (!result.id) {
+        setError("Server did not return a paste id.");
         return;
       }
 
