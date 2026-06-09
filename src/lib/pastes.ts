@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import { z } from "zod";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 const createPasteSchema = z.object({
   content: z.string().trim().min(1).max(50_000),
@@ -18,6 +18,7 @@ const expiryDurations: Record<string, number> = {
 export async function createPaste(input: unknown) {
   const data = createPasteSchema.parse(input);
   const duration = expiryDurations[data.expiresIn];
+  const prisma = getPrisma();
 
   return prisma.paste.create({
     data: {
@@ -30,6 +31,7 @@ export async function createPaste(input: unknown) {
 }
 
 export async function consumePaste(id: string) {
+  const prisma = getPrisma();
   const paste = await prisma.paste.findUnique({
     where: { id },
   });
